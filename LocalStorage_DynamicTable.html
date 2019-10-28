@@ -1,0 +1,77 @@
+<html>
+    <head>
+        <style>
+            table, td, th{
+  border: 1px solid black;
+}
+        </style>
+    </head>
+  <body>
+    <form>
+     Enter Username:<input type="text" id="username"> <br>
+     Enter Password:<input type="password" id="password"> <br>
+     Enter MobileNumber:<input type="text" id="mobile_number"> <br>
+      <button onclick="register()">Register</button>
+    </form>
+
+    <hr>
+    <br>
+    <caption><b>User Details</b> </caption>
+<br>
+    <table id="myTable">
+        <tr>
+            <th><i>User Name</i> </th>
+            <th> <i>Password</i></th>
+            <th> <i>Mobile Number</i></th>
+        </tr>
+          
+          </table>
+          <br>
+ 
+    <script>
+    
+      function register(){
+       event.preventDefault();
+       var username=document.getElementById("username").value;
+       var password=document.getElementById("password").value;
+       var mobile=document.getElementById("mobile_number").value;
+ 
+          var userdata={
+            username:username,
+            password:password,
+            mobile:mobile
+          }
+           if(localStorage.getItem('userDetails') == null){
+             localStorage.setItem('userDetails',JSON.stringify([]));
+             var userDTA=JSON.parse(localStorage.getItem('userDetails'));
+              console.log('userDTA', userDTA);
+              userDTA.push(JSON.stringify(userdata));
+              var convertedJSArrayToString=  JSON.stringify(userDTA);
+              console.log('convertedJSArrayToString',convertedJSArrayToString);
+              localStorage.setItem('userDetails',convertedJSArrayToString);
+              
+           }
+           else
+           {
+            var userDetailsArray=JSON.parse(localStorage.getItem('userDetails'));
+                 userDetailsArray.push(JSON.stringify(userdata));
+                 console.log(userDetailsArray);
+                 localStorage.setItem('userDetails',JSON.stringify(userDetailsArray));
+           }
+          
+          //localStorage.setItem('userDetails', JSON.stringify(userdata));
+          // Updating Table Dynamically
+          var table = document.getElementById("myTable");
+          var row = table.insertRow(1);
+              var uname = row.insertCell(0);
+            var pw = row.insertCell(1);
+            var num=row.insertCell(2);
+
+            uname.innerHTML = username;
+             pw.innerHTML = password;
+             num.innerHTML=mobile;
+      }
+    
+    </script>
+  </body>
+</html>
